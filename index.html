@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Valentine 💖</title>
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fde8ef;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: hidden;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 40px 50px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  max-width: 420px;
+}
+
+h1 { margin: 0; font-size: 26px; }
+
+.sub { margin-top: 10px; color: #777; font-size: 14px; }
+
+.buttons { margin-top: 30px; position: relative; height: 50px; }
+
+button {
+  padding: 12px 28px;
+  font-size: 15px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#yes { background: #ff4f8b; color: white; margin-right: 20px; }
+#no { background: #f1f1f1; position: absolute; }
+
+/* Celebration screen */
+.celebration {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #000000dd, #000);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 10;
+  color: white;
+  text-align: center;
+}
+
+.celebration h1 { color: #ff69b4; font-size: 56px; margin-bottom: 20px; }
+
+.couple-photo {
+  width: 280px;
+  border-radius: 20px;
+  margin-top: 25px;
+  box-shadow: 0 10px 35px rgba(255,105,180,.6);
+  animation: popIn 1.2s ease forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.love-letter {
+  max-width: 500px;
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.firework {
+  position: fixed;
+  width: 420px;
+  height: 420px;
+  pointer-events: none;
+  z-index: 9;
+  filter: blur(1.5px) brightness(1.15);
+  animation: fireworkPop 2.8s ease-out forwards;
+}
+
+@keyframes fireworkPop {
+  0% { transform: scale(0.4); opacity: 0; }
+  30% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+  <h1>Vaishulu, will you be my Valentine? 💖💞</h1>
+  <div class="sub">Choose wisely. (The “No” button is… shy.)</div>
+  <div class="buttons">
+    <button id="yes">YES</button>
+    <button id="no">NO</button>
+  </div>
+</div>
+
+<div class="celebration" id="celebration">
+  <h1>VAISHULU SAID YES 💍🎆</h1>
+  <!-- Celebration GIF -->
+  <img src="https://image2url.com/r2/default/gifs/1770413717472-2d89cf31-5e99-4f35-9109-d6f72b5be1c5.gif" 
+       alt="Celebration GIF" 
+       class="couple-photo">
+  <div class="love-letter">
+    <p>From the moment we met, my world became brighter.<br>
+    Your smile lights up my darkest days.<br>
+    Today and every day, I choose you, magic. 💖<br>
+    Forever yours, always.</p>
+  </div>
+</div>
+
+<!-- Romantic Music: replace with your MP3 direct link -->
+<audio id="romanticMusic" loop>
+  <source src="YOUR_MP3_DIRECT_LINK_HERE.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const card = document.getElementById("card");
+const celebration = document.getElementById("celebration");
+
+const texts = ["NO","Please no 🥺","Are you sure?","Don’t do this 😭","Try YES instead!","I’m shy 🙈"];
+
+let noCount = 0;
+
+/* NO button teases */
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 250 - 125;
+  const y = Math.random() * 120 - 60;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  noBtn.textContent = texts[noCount % texts.length];
+  noCount++;
+});
+
+/* Firework blast */
+function fireworkBlast() {
+  const fw = document.createElement("img");
+  fw.className = "firework";
+  fw.src = "https://media.giphy.com/media/26tOZ42Mg6pbTUPHW/giphy.gif";
+  fw.style.left = (window.innerWidth/2 - 210) + "px";
+  fw.style.top = (window.innerHeight/2 - 210) + "px";
+  document.body.appendChild(fw);
+  setTimeout(()=>fw.remove(), 2800);
+}
+
+/* YES click */
+yesBtn.addEventListener("click", () => {
+  card.style.display = "none";
+  celebration.style.display = "flex";
+
+  // Play music
+  const music = document.getElementById("romanticMusic");
+  music.volume = 0.4;
+  music.play();
+
+  // Initial firework blast
+  fireworkBlast();
+
+  // Fireworks continue every 3s
+  setInterval(fireworkBlast, 3000);
+});
+</script>
+
+</body>
+</html>
